@@ -15,6 +15,7 @@ $(document).ready(function() {
     currentRoom: 'lobby',
     messages: [],
     lastMessageId: 0,
+    friends: {},
 
     xssEscape: text => {
       if (text === undefined) {
@@ -79,7 +80,25 @@ $(document).ready(function() {
       app.messages.filter(function(message) {
         return message.roomname === app.currentRoom;
       }).forEach(function(message) {
-        $('#chats').append('<p>' + app.xssEscape(message.username) + ' ' + app.xssEscape(message.roomname) + ' ' + app.xssEscape(message.text));
+
+        if (!message.roomname) {
+          message.roomname = 'lobby';
+        }
+        var $chat = $('<div class="chat"/>');
+        var $username = $('<span class="username"/>');
+        $username.text(message.username + ': ').attr('data-roomname', message.roomname).attr('data-username', message.username).appendTo($chat);
+
+
+
+        // $('#chats').append('<div class="username">' + app.xssEscape(message.username) + ' ' + app.xssEscape(message.roomname) + ' ' + app.xssEscape(message.text))
+        // .attr('data-username', app.xssEscape(message.username))
+
+        if (app.friends[message.username] === true) {
+          $username.addClass('friend');
+        }
+        var $message = $('<br><span/>');
+        $message.text(message.text).appendTo($chat);
+        $('#chats').append($chat);
       });
 
       this.changeRoom(app.currentRoom);
@@ -127,14 +146,19 @@ $(document).ready(function() {
 
   $('.dropdown-content').on('click', 'a', function(e) {
     e.preventDefault();
-
-    console.log(this);
-
     var room = $(this).text();
     app.currentRoom = room;
-    console.log(app.currentRoom);
     app.update();
     app.fetch();
   });
-// need on 'change' handler here for selecting current room
+
+  $('#chats').on('click', '.username', function(e) {
+    var username = $(e.target).data('username');
+    if (username !== undefined) {
+      app.friends[username] = !app.friends[username];
+      var selector = '[data-username="' + username.replace(/"/g, '\\\"') + '"]';
+
+      var $usernames = $(selector).toggleClass('friend');
+    }
+  });
 });
