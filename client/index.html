@@ -9,7 +9,7 @@
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/underscore/underscore.js"></script>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
@@ -30,6 +30,31 @@
     <div id="main">
       <h1>chatterbox</h1>
 
+ <!--     <div class="btn-group">
+        <button type="button" class="btn btn-default">Chatroom</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu room-select">
+          <li>This site</li>
+        </ul>
+      </div> -->
+      <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+        <div class="dropdown-content">
+          <a class="new-room" href="#">New Room</a>
+
+        </div>
+      </div>
+    </br>
+  </br>
+      <p>Current Room:
+      <div id="current-room"></div>
+      </p>
+
+
+    </br>
 
     <div class="form-group">
       <input type="text" class="form-control">
@@ -40,5 +65,6 @@
 
     </div>
     <div id="chats"></div>
+
   </body>
 </html>
